@@ -13,7 +13,6 @@
     "author": "Jonathan Armentor",
     "license": "ISC",
     "dependencies": {
-        "chalk": "^5.0.1",
         "commander": "^9.3.0",
         "node-fetch": "^3.2.4"
     }
