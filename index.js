@@ -2,12 +2,16 @@
 
 import { program as wpeCLI } from 'commander'
 
-import listSites from './commands/list-sites.js'
-import getSiteByDomain from './commands/get-site-by-domain.js'
-import whoami from './commands/whoami.js'
+import { listSites, getSiteByDomain, whoami } from './commands/index.js'
 
-wpeCLI.name('wpe')
-wpeCLI.description('Command Line Access to WP Engine')
+import * as fs from 'fs'
+const packageInfo = JSON.parse(fs.readFileSync('./package.json'))
+
+wpeCLI
+    .name('wpe')
+    .description('Command Line Access to WP Engine')
+    .version(packageInfo.version)
+    .storeOptionsAsProperties()
 
 wpeCLI
     .command('list-sites')
