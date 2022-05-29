@@ -2,15 +2,21 @@
 
 This is a super simple rudimentary cli for interacting with the [WP Engine API](https://wpengineapi.com/).
 
-At present, it only gets information and outputs it to the console. It was built to satisfy a very specific need:
+At present it only supports the following functions:
 
-Given a domain, quickly obtaining the environment name for accessing it over ssh using a function like the one below
+-   triggering a backup for a given environment
+-   finding an environment by domain name / partial domain name
+-   listing all environments
+
+This thing was purpose built for the following cases: - given a domain, quickly obtaining the environment name for accessing it over ssh using a function like the one below
 
 ```bash
 wpe-ssh () {
 	ssh "$1@$1.ssh.wpengine.net"
 }
 ```
+
+-   or quickly triggering a backup for a given environment by environment name
 
 ---
 
