@@ -6,3 +6,6 @@ from './list-sites.js'
 
 export { default as whoami }
 from './whoami.js'
+
+export { default as backup }
+from './backup.js'
