@@ -1,6 +1,7 @@
 #! /usr/bin/env node
 
 import { program as wpeCLI } from 'commander'
+
 import listSites from './commands/list-sites.js'
 import getSiteByDomain from './commands/get-site-by-domain.js'
 import whoami from './commands/whoami.js'

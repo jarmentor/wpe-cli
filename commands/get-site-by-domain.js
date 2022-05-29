@@ -1,23 +1,7 @@
-import fetch from 'node-fetch'
-import { getAuthorization } from '../authorize.js'
+import { getAllSites } from '../util.js'
 
 export default async function getSiteByDomain(domains) {
-    const getSites = async(
-        url = 'https://api.wpengineapi.com/v1/installs'
-    ) => {
-        const res = await fetch(url, {
-            method: 'GET',
-            headers: { Authorization: getAuthorization() },
-        })
-        return await res.json()
-    }
-
-    let res = await getSites()
-    const sites = [...res.results]
-    while (res.next) {
-        res = await getSites(res.next)
-        sites.push(...res.results)
-    }
+    let sites = await getAllSites()
 
     const matches = []
 

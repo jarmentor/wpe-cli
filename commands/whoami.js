@@ -1,5 +1,5 @@
 import fetch from 'node-fetch'
-import { getAuthorization } from '../authorize.js'
+import { getAuthorization } from '../util.js'
 
 export default async function whoami() {
     const res = await fetch('https://api.wpengineapi.com/v1/user', {
