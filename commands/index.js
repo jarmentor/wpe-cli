@@ -1,11 +1,6 @@
-export { default as getSiteByDomain }
-from './get-site-by-domain.js'
-
-export { default as listSites }
-from './list-sites.js'
-
-export { default as whoami }
-from './whoami.js'
-
-export { default as backup }
-from './backup.js'
+export { default as listSites } from './list-sites.js'
+export { default as whoami } from './whoami.js'
+export { default as status } from './status.js'
+export { default as purgeCacheByName } from './purgeCache.js'
+export { default as backup } from './backup.js'
+export { default as findEnvironments } from './find-environments.js'

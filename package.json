@@ -1,11 +1,11 @@
 {
     "name": "wpe-cli",
-    "version": "1.0.0",
-    "description": "cli built in node for interacting with wpengine",
+    "version": "1.1.0",
+    "description": "NodeJS based CLI for interacting with WP Engine",
     "main": "index.js",
     "type": "module",
     "bin": {
-        "wpe": "./index.js"
+        "wpe": "./cli.js"
     },
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1"
@@ -13,7 +13,7 @@
     "author": {
         "name": "Jonathan Armentor",
         "email": "jonathan@comitdevelopers.com",
-        "url": "https://jonathanarmentor.com/"
+        "url": "https://jonathanarmentor.dev/"
     },
     "license": "SEE LICENSE IN LICENSE",
     "dependencies": {
