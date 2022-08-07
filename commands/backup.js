@@ -1,12 +1,16 @@
 import fetch from 'node-fetch'
 import {
-    getAllSites,
-    findTargetEnvironmentByName,
+    findTargetEnvironment,
     getAuthorization,
+    formatOutput,
 } from '../util.js'
 
-export default async function backup(environment, options, sites = null) {
-    const targetEnv = await findTargetEnvironmentByName(environment, sites)
+export default async function backup(
+    environment,
+    { colors, ...options },
+    sites = null
+) {
+    const targetEnv = await findTargetEnvironment.byName(environment, sites)
 
     if (targetEnv.length == 0) {
         return console.log(`No environment with name ${environment} found.`)
@@ -36,11 +40,14 @@ export default async function backup(environment, options, sites = null) {
 
     const wpeResponseJson = await res.json()
 
-    return console.log({
-        environment: targetEnv.at(0).name,
-        domain: targetEnv.at(0).primary_domain,
-        description: options.message,
-        notify: options.notificationEmails,
-        ...wpeResponseJson,
-    })
+    return formatOutput(
+        {
+            environment: targetEnv.at(0).name,
+            domain: targetEnv.at(0).primary_domain,
+            description: options.message,
+            notify: options.notificationEmails,
+            ...wpeResponseJson,
+        },
+        colors
+    )
 }

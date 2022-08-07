@@ -1,3 +1,4 @@
+import { inspect } from 'node:util'
 import fetch from 'node-fetch'
 
 export function getAuthorization() {
@@ -18,6 +19,7 @@ export const findTargetEnvironment = {
         )
     },
 }
+
 export function findTargetEnvironmentByName(environmentName, sites) {
     return findTargetEnvironment.byName(environmentName, sites)
 }
@@ -26,8 +28,13 @@ export function findTargetEnvironmentByDomain(domain, sites) {
     return findTargetEnvironment.byDomain(domain, sites)
 }
 
-export function formatOutput(obj) {
-    return JSON.stringify(obj, null, 2)
+export function formatOutput(obj, colors = true) {
+    return console.log(
+        inspect(obj, {
+            maxArrayLength: null,
+            colors,
+        })
+    )
 }
 
 async function getSites(endpoint = 'https://api.wpengineapi.com/v1/installs') {

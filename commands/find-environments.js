@@ -1,5 +1,4 @@
-import { inspect } from 'node:util'
-import { getAllSites } from '../util.js'
+import { getAllSites, formatOutput } from '../util.js'
 
 export default async function findEnvironments(
     query = '*',
@@ -22,10 +21,5 @@ export default async function findEnvironments(
         }
     })
 
-    return console.log(
-        inspect(matches, {
-            maxArrayLength: null,
-            colors,
-        })
-    )
+    return formatOutput(matches, colors)
 }
