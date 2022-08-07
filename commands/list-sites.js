@@ -1,12 +1,6 @@
-import { inspect } from 'node:util'
-import { getAllSites } from '../util.js'
+import { getAllSites, formatOutput } from '../util.js'
 
-export default async function listSites() {
+export default async function listSites({ colors }) {
     let sites = await getAllSites()
-    return console.log(
-        inspect(sites, {
-            maxArrayLength: null,
-            colors: options.colors,
-        })
-    )
+    return formatOutput(sites, colors)
 }

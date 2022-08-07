@@ -18,8 +18,18 @@ async function purgeCache(environmentId, type = 'object') {
     )
 
     return [200, 202].includes(res.status)
-        ? { success: true, environmentId, cachePurged: type }
-        : { success: false, status: res.status, response: await res.json() }
+        ? {
+              success: true,
+              status: res.status,
+              environmentId,
+              cachePurged: type,
+          }
+        : {
+              success: false,
+              status: res.status,
+              environmentId,
+              response: await res.json(),
+          }
 }
 
 const createMessage = async (resp, status, targetEnv, cachesPurged) => ({
@@ -30,18 +40,20 @@ const createMessage = async (resp, status, targetEnv, cachesPurged) => ({
     resp,
 })
 
-export default async function purgeCacheByName(environmentName, options) {
+export default async function purgeCacheByName(
+    environmentName,
+    { type, ...options }
+) {
     const targetEnv = await findTargetEnvironment.byName(environmentName)
-    const cacheToPurge =
-        options.type == 'all' ? ['page', 'object'] : [options.type]
+    const cacheToPurge = type == 'all' ? ['page', 'object'] : [type]
 
     if (targetEnv.length == 0) {
-        return console.log(`No environment with name ${environment} found.`)
+        return console.log(`No environment with name ${environmentName} found.`)
     }
 
     if (targetEnv.length > 1) {
         return console.log(
-            `Multiple environments found for name: ${environment}`,
+            `Multiple environments found for name: ${environmentName}`,
             targetEnv
         )
     }

@@ -21,8 +21,9 @@ wpeCLI
 
 wpeCLI
     .command('list-sites')
+    .option('--no-colors', 'output non-colorized')
     .description('Retrieve a list of all sites in WPE.')
-    .action(listSites)
+    .action((options) => listSites(options))
 
 wpeCLI
     .command('find-environments')
@@ -41,6 +42,7 @@ wpeCLI
 wpeCLI
     .command('backup <environments...>')
     .requiredOption('-m, --message [message]')
+    .option('--no-colors', 'output non-colorized')
     .requiredOption('-n, --notification-emails [emails...]')
     .description('Trigger a backup on an arbitrary environment.')
     .action(async (environments, options) => {

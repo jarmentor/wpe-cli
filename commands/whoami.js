@@ -1,5 +1,5 @@
 import fetch from 'node-fetch'
-import { getAuthorization } from '../util.js'
+import { getAuthorization, formatOutput } from '../util.js'
 
 export default async function whoami() {
     const res = await fetch('https://api.wpengineapi.com/v1/user', {
@@ -8,5 +8,5 @@ export default async function whoami() {
     })
 
     const json = await res.json()
-    return console.dir(json)
+    return formatOutput(json)
 }
