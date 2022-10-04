@@ -2,7 +2,12 @@
 
 import { program as wpeCLI } from 'commander'
 
-import { listSites, getSiteByDomain, whoami, backup } from './commands/index.js'
+import {
+    listSites,
+    findEnvironments,
+    whoami,
+    backup,
+} from './commands/index.js'
 
 import * as fs from 'fs'
 const packageInfo = JSON.parse(fs.readFileSync('./package.json'))
@@ -10,7 +15,7 @@ const packageInfo = JSON.parse(fs.readFileSync('./package.json'))
 wpeCLI
     .name('wpe')
     .description('Command Line Access to WP Engine')
-    .version(packageInfo.version)
+    .version(packageInfo.version, '-v, --version', 'output the current version')
 
 wpeCLI
     .command('list-sites')
@@ -18,17 +23,18 @@ wpeCLI
     .action(listSites)
 
 wpeCLI
-    .command('find-environments <domains...>')
-    .description('Retrieve a list of environments matching a domain search.')
-    .action((domains) => getSiteByDomain(domains))
+    .command('find <searches...>')
+    .description(
+        'Retrieve a list of environments where the name or domain matches a search.'
+    )
+    .action((searches) => findEnvironments(searches))
 
 wpeCLI
     .command('backup <environment>')
-    .requiredOption('-m, --message [message]')
-    .requiredOption('-n, --notification-emails [emails...]')
-    .description('Trigger a backup on an arbitrary environment.')
+    .option('-m, --message [message]')
+    .option('-n, --notification-emails [emails...]')
+    .description('Trigger a backup on an arbitrary environment by name.')
     .action((environment, options) => backup(environment, options))
-
 
 wpeCLI
     .command('whoami')
