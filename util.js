@@ -15,6 +15,23 @@ async function getSites(url = 'https://api.wpengineapi.com/v1/installs') {
     })
     return await res.json()
 }
+async function getGroups(url = 'https://api.wpengineapi.com/v1/sites') {
+    const res = await fetch(url, {
+        method: 'GET',
+        headers: { Authorization: getAuthorization() },
+    })
+    return await res.json()
+}
+
+export async function getAllGroups() {
+    let res = await getGroups()
+    const sites = [...res.results]
+    while (res.next) {
+        res = await getGroups(res.next)
+        sites.push(...res.results)
+    }
+    return sites
+}
 
 export async function getAllSites() {
     let res = await getSites()

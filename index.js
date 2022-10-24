@@ -4,6 +4,7 @@ import { program as wpeCLI } from 'commander'
 
 import {
     listSites,
+    listGroups,
     findEnvironments,
     whoami,
     backup,
@@ -21,6 +22,10 @@ wpeCLI
     .command('list-sites')
     .description('Retrieve a list of all sites in WPE.')
     .action(listSites)
+wpeCLI
+    .command('list-groups')
+    .description('Retrieve a list of all sites in WPE.')
+    .action(listGroups)
 
 wpeCLI
     .command('find <searches...>')
