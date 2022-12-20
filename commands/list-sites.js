@@ -1,6 +1,6 @@
-import { getAllSites, formatOutput } from '../util.js'
+import { getAllSites } from '../util.js'
 
-export default async function listSites({ colors }) {
+export default async function listSites() {
     let sites = await getAllSites()
-    return formatOutput(sites, colors)
+    return console.log(JSON.stringify(sites, null, 2))
 }
