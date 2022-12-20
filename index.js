@@ -35,11 +35,13 @@ wpeCLI
     .action((searches) => findEnvironments(searches))
 
 wpeCLI
-    .command('backup <environment>')
+    .command('backup <environments...>')
     .option('-m, --message [message]')
     .option('-n, --notification-emails [emails...]')
-    .description('Trigger a backup on an arbitrary environment by name.')
-    .action((environment, options) => backup(environment, options))
+    .description('Trigger a backup on an arbitrary environments by name.')
+    .action((environments, options) => {
+        environments.map((environment) => backup(environment, options))
+    })
 
 wpeCLI
     .command('whoami')
