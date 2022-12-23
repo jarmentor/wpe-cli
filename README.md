@@ -1,14 +1,37 @@
 # WPE-CLI
 
-This is a super simple rudimentary cli for interacting with the [WP Engine API](https://wpengineapi.com/).
+## Usage:
 
-At present it only supports the following functions:
+1. Generate your API Credentials in your WP Engine [API Access Settings](https://my.wpengine.com/api_access)
 
--   triggering a backup for a given environment
--   finding an environment by domain name / partial domain name
+2. Set the following environment variables in your profile (for example `~/.zshrc`, `~/.bash_profile`, or `~/.bashrc`)
+
+```bash
+export WPENGINE_USER_ID="XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX"
+export WPENGINE_PASSWORD="XXXXXXXXXXXXXXXXXXXXXXX"
+```
+
+3. Run the command line utility via `npx`
+
+```bash
+npx jarmentor/wpe-cli
+```
+
+## Description
+
+This is a super simple rudimentary command line interface for interacting with WP Engine's services through the [WP Engine API](https://wpengineapi.com/). This CLI is **not** a full implementation of that spec.
+
+At present it supports the following actions:
+
+-   triggering a backup on an array of environments
+-   fetching details of an environment by partial domain or environment name
 -   listing all environments
 
-This thing was purpose built for the following cases: - given a domain, quickly obtaining the environment name for accessing it over ssh using a function like the one below
+## Motivation
+
+This thing was purpose built for the following cases: - given a domain, quickly obtaining environment details to:
+
+-   accessing it over ssh using a function like this
 
 ```bash
 wpe-ssh () {
@@ -16,51 +39,11 @@ wpe-ssh () {
 }
 ```
 
--   or quickly triggering a backup for a given environment by environment name
+-   quickly access it in WPE via `https://my.wpengine.com/installs/{ENVIRONMENT_NAME}`
 
----
+-   or quickly triggering a backup an environment by name
 
-## Basic install instructions
+## Roadmap / Todo
 
-### Adding Credentials
-
-First [generate your credentials](https://my.wpengine.com/api_access)
-
-Then, add these to your profile. (e.g. `.zshrc`)
-
-```bash
-export WPENGINE_USER_ID="YOUR_API_USER_ID"
-export WPENGINE_PASSWORD="YOUR_API_PASSWORD"
-```
-
-### Install Dependencies
-
--   `cd` into the package directory
--   run the following
-
-```bash
-
-npm install
-
-```
-
-### Link the package
-
--   still in the package directory
--   run the following
-
-```bash
-npm link
-```
-
-### Run the package
-
-```bash
-wpe help
-```
-
-## Basic uninstall instructions
-
-```bash
-npm r -g wpe-cli
-```
+-   [ ] Cache clearing functionality
+-   [ ] Interactive interface for performing bulk actions through [inquirer.js](https://www.npmjs.com/package/inquirer)
