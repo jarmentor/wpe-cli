@@ -1,6 +1,6 @@
 {
     "name": "wpe-cli",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "description": "cli built in node for interacting with wpengine",
     "main": "index.js",
     "type": "module",
@@ -14,7 +14,6 @@
     "license": "ISC",
     "dependencies": {
         "commander": "^9.3.0",
-        "inquirer": "^9.1.2",
         "node-fetch": "^3.2.4"
     }
 }
