@@ -1,4 +1,5 @@
 #! /usr/bin/env node
+process.removeAllListeners('warning')
 
 import { program as wpeCLI } from 'commander'
 
@@ -10,8 +11,7 @@ import {
     backup,
 } from './commands/index.js'
 
-import * as fs from 'fs'
-const packageInfo = JSON.parse(fs.readFileSync('./package.json'))
+import packageInfo from './package.json' assert { type: 'json' }
 
 wpeCLI
     .name('wpe')
