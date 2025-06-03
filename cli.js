@@ -28,7 +28,7 @@ wpeCLI
     .action((options) => listSites(options))
 
 wpeCLI
-    .command('find-environments')
+    .command('find')
     .argument(
         '[query]',
         'query string searches environment name or associated domain; partial matches allowed',

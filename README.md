@@ -24,7 +24,7 @@ This is a super simple rudimentary command line interface for interacting with W
 At present it supports the following actions:
 
 -   triggering a backup on an array of environments
--   fetching details of an environment by partial domain or environment name
+-   fetching details of environments by partial domain or environment name; optional filters: --type, --status, --php
 -   listing all environments
 -   opening an SSH session to an environment by name or domain
 
