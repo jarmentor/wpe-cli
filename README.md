@@ -26,18 +26,13 @@ At present it supports the following actions:
 -   triggering a backup on an array of environments
 -   fetching details of an environment by partial domain or environment name
 -   listing all environments
+-   opening an SSH session to an environment by name or domain
 
 ## Motivation
 
 This thing was purpose built for the following cases: - given a domain, quickly obtaining environment details to:
 
--   accessing it over ssh using a function like this
-
-```bash
-wpe-ssh () {
-	ssh "$1@$1.ssh.wpengine.net"
-}
-```
+-   opening an SSH session to an environment or domain by running `wpe ssh <environment|domain>`, e.g. `wpe ssh www.motorcitywashworks.com`
 
 -   quickly access it in WPE via `https://my.wpengine.com/installs/{ENVIRONMENT_NAME}`
 

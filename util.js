@@ -122,3 +122,22 @@ export async function getAllGroups() {
     await writeCache(cacheName, groups)
     return groups
 }
+
+/**
+ * Utility for locating target environments by partial name or domain.
+ */
+export const findTargetEnvironment = {
+    /**
+     * Find environments whose name or primary domain includes the given search term.
+     * @param {string} searchName Partial environment name or domain.
+     * @returns {Promise<any[]>} Matching site objects.
+     */
+    byName: async (searchName) => {
+        const sites = await getAllSites()
+        return sites.filter(
+            (site) =>
+                site.name.includes(searchName) ||
+                site.primary_domain.includes(searchName)
+        )
+    },
+}

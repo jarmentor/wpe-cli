@@ -12,6 +12,8 @@ import {
 } from './commands/index.js'
 
 import * as fs from 'fs'
+import { spawn } from 'child_process'
+import { getAllSites } from './util.js'
 const { version } = JSON.parse(fs.readFileSync('./package.json'))
 
 wpeCLI
@@ -68,5 +70,35 @@ wpeCLI
     .command('whoami')
     .description('Retrieve the current user.')
     .action(whoami)
+
+wpeCLI
+    .command('ssh <query>')
+    .description('Open an SSH session to the specified environment or domain.')
+    .action(async (query) => {
+        let environment = query
+        if (query.includes('.')) {
+            const sites = await getAllSites()
+            const matches = sites.filter(
+                (site) =>
+                    site.primary_domain.includes(query) ||
+                    site.name.includes(query)
+            )
+            if (matches.length === 0) {
+                console.error(`No environments found for "${query}".`)
+                process.exit(1)
+            }
+            environment = matches[0].name
+            if (matches.length > 1) {
+                console.warn(
+                    `Multiple environments matched "${query}". Using first: ${environment}`
+                )
+            }
+        }
+        spawn(
+            'ssh',
+            [`${environment}@${environment}.ssh.wpengine.net`],
+            { stdio: 'inherit' }
+        )
+    })
 
 wpeCLI.parse(process.argv)

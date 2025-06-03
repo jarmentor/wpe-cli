@@ -2,10 +2,10 @@
     "name": "wpe-cli",
     "version": "1.0.1",
     "description": "cli built in node for interacting with wpengine",
-    "main": "index.js",
+    "main": "cli.js",
     "type": "module",
     "bin": {
-        "wpe": "./index.js"
+        "wpe": "./cli.js"
     },
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1"
