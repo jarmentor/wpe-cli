@@ -3,7 +3,7 @@ import fs from 'fs'
 import os from 'os'
 import path from 'path'
 
-const CACHE_TTL = 30 * 60 * 1000 // 30 minutes
+const CACHE_TTL = 6 * 60 * 60 * 1000 // 6 hours
 const CACHE_DIR = process.env.XDG_CACHE_HOME
     ? path.join(process.env.XDG_CACHE_HOME, 'wpe-cli')
     : path.join(os.homedir(), '.cache', 'wpe-cli')
