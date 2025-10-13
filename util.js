@@ -70,6 +70,11 @@ async function getSites(url = 'https://api.wpengineapi.com/v1/installs') {
         method: 'GET',
         headers: { Authorization: getAuthorization() },
     })
+    if (!res.ok) {
+        throw new Error(
+            `WP Engine API error: ${res.status} ${res.statusText}`
+        )
+    }
     return res.json()
 }
 
@@ -78,6 +83,11 @@ async function getGroups(url = 'https://api.wpengineapi.com/v1/sites') {
         method: 'GET',
         headers: { Authorization: getAuthorization() },
     })
+    if (!res.ok) {
+        throw new Error(
+            `WP Engine API error: ${res.status} ${res.statusText}`
+        )
+    }
     return res.json()
 }
 
