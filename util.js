@@ -82,6 +82,44 @@ async function getGroups(url = 'https://api.wpengineapi.com/v1/sites') {
 }
 
 /**
+ * Fetch all pages from a paginated WP Engine API endpoint in parallel.
+ * Makes one initial request to get the total count, then fetches remaining pages concurrently.
+ *
+ * @param {Function} fetchFn The fetch function to use (getSites or getGroups)
+ * @param {string} baseUrl The base API URL
+ * @param {number} pageSize Number of items per page (default: 100)
+ * @returns {Promise<any[]>} Array of all items from all pages
+ */
+async function fetchAllPaginated(fetchFn, baseUrl, pageSize = 100) {
+    // Make initial request to get count and first page
+    const firstPage = await fetchFn(`${baseUrl}?limit=${pageSize}`)
+    const { count, results } = firstPage
+
+    // If all results fit in first page, return immediately
+    if (results.length >= count) {
+        return results
+    }
+
+    // Calculate how many additional pages we need
+    const totalPages = Math.ceil(count / pageSize)
+    const remainingPages = totalPages - 1
+
+    // Generate URLs for all remaining pages
+    const pageUrls = Array.from(
+        { length: remainingPages },
+        (_, i) => `${baseUrl}?limit=${pageSize}&offset=${(i + 1) * pageSize}`
+    )
+
+    // Fetch all remaining pages in parallel
+    const remainingResults = await Promise.all(
+        pageUrls.map(url => fetchFn(url).then(res => res.results))
+    )
+
+    // Combine first page with all other pages
+    return results.concat(...remainingResults)
+}
+
+/**
  * Retrieve all site instances, using a local cache to reduce network calls.
  * Cache entries expire after a fixed TTL.
  * @returns {Promise<any[]>} Array of site objects
@@ -92,12 +130,10 @@ export async function getAllSites() {
     if (cached) {
         return cached
     }
-    let res = await getSites()
-    const sites = [...res.results]
-    while (res.next) {
-        res = await getSites(res.next)
-        sites.push(...res.results)
-    }
+    const sites = await fetchAllPaginated(
+        getSites,
+        'https://api.wpengineapi.com/v1/installs'
+    )
     await writeCache(cacheName, sites)
     return sites
 }
@@ -113,12 +149,10 @@ export async function getAllGroups() {
     if (cached) {
         return cached
     }
-    let res = await getGroups()
-    const groups = [...res.results]
-    while (res.next) {
-        res = await getGroups(res.next)
-        groups.push(...res.results)
-    }
+    const groups = await fetchAllPaginated(
+        getGroups,
+        'https://api.wpengineapi.com/v1/sites'
+    )
     await writeCache(cacheName, groups)
     return groups
 }
