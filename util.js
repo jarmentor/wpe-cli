@@ -168,6 +168,14 @@ export async function getAllGroups() {
 }
 
 /**
+ * Discard every cache file so the next read hits the API.
+ * @returns {Promise<void>}
+ */
+export async function clearCaches() {
+    await fs.promises.rm(CACHE_DIR, { recursive: true, force: true })
+}
+
+/**
  * Utility for locating target environments by partial name or domain.
  */
 export const findTargetEnvironment = {
