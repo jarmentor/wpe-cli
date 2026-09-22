@@ -16,7 +16,7 @@ import * as fs from "fs";
 import { spawn } from "child_process";
 import { fileURLToPath } from "url";
 import { dirname, join } from "path";
-import { getAllSites } from "./util.js";
+import { getAllSites, clearCaches } from "./util.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -65,6 +65,15 @@ wpeCLI
   .description("Purge the WPE cache for an arbitrary environment.")
   .action((environment, options) => {
     purgeCacheByName(environment, options);
+  });
+
+wpeCLI
+  .command("refresh")
+  .description("Discard the local site cache and re-fetch from the API.")
+  .action(async () => {
+    await clearCaches();
+    const sites = await getAllSites();
+    console.log(`Cached ${sites.length} environments.`);
   });
 
 wpeCLI
